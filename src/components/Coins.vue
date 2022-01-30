@@ -4,12 +4,12 @@
     <div class="daily__coin-image crypto-width">
       <img :src="coin.image" alt="" class="daily__coin-icon" />
     </div>
-    <div class="daily__coin-current crypto-width">{{ coin.current_price }}</div>
+    <div class="daily__coin-current crypto-width">{{ coin.current_price.toFixed(2) }} $</div>
     <div class="daily__coin-low crypto-width">
-      {{ coin.low_24h }}
+      {{ coin.low_24h.toFixed(2) }} $
     </div>
     <div class="daily__coin-high crypto-width">
-      {{ coin.high_24h }}
+      {{ coin.high_24h.toFixed(2) }} $
     </div>
   </div>
 </template>

@@ -1,55 +1,47 @@
 <template>
   <div class="chart__container">
-    <BarChart
+    <LineChart
       :chart-data="data"
       :oprions="options"
-      :css-classes="chart-container"
     />
 
-    {{currentCoinPrice}}
   </div>
 </template>
 
 
 <script lang="ts">
-import { computed, defineComponent, ref, shallowRef, watch } from "@vue/runtime-core";
-import { BarChart } from "vue-chart-3";
 
-import {Chart, BarController, CategoryScale, LinearScale, BarElement} from 'chart.js'
+import { computed, defineComponent,  watch,  ref } from "@vue/runtime-core";
+import { LineChart } from "vue-chart-3";
 
-Chart.register(BarController, CategoryScale, LinearScale, BarElement)
+import {Chart, registerables } from 'chart.js'
+
+Chart.register(...registerables)
 
 export default defineComponent({
   components: {
-    BarChart,
+    LineChart,
   },
   props:[
-      "currentCoinPrice"
+      "coinTickers"
   ],
   setup(props) {
-    let dataValues = shallowRef<any>([1,1,1]);
-
-
-    watch(props, (first, second) => {
-        setTimeout(() => {
-            dataValues.value = first.currentCoinPrice
-            console.log(first.currentCoinPrice)
-        }, 2000)
-        console.log(first.currentCoinPrice)
-    } )
-
+    let dataValues = ref<any>([])
+    let renderKey = ref<number>(0)
+    
     const data = computed(() => ({
-      labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+      labels: [...Array(dataValues.value.length).keys()],
       datasets: [
         {
-          label: "foo",
+          label: "Day Values",
           data: dataValues.value,
           backgroundColor: "tomato",
+          borderColor: "#ff5722"
         },
       ]
     }));
 
-    const options = ref<any>({
+    const options = ref({
       plugins: {
         title: {
           text: "Bar",
@@ -57,13 +49,18 @@ export default defineComponent({
       },
     });
 
-    
 
-    return { data, options };
+    watch(props, (f, s) => {
+      const coinForDollars = f.coinTickers.filter(el => el.target === 'USD')
+
+      dataValues.value = coinForDollars.map(el => el.last)
+    } )
+
+    return { data, options, renderKey };
   },
 });
-</script>
 
+ </script>
 
 
 <style>

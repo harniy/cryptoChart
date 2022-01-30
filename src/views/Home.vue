@@ -39,13 +39,13 @@ export default {
     Coins,
     Info
   },
-
   
 };
 </script>
 
 
 <style>
+
 .app__title {
   margin: 0;
   color: #f9f1cb;

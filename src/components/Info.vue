@@ -51,8 +51,6 @@
   </div>
 </template>
 
-
-
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue";
 import { useStore } from "vuex";
@@ -69,7 +67,12 @@ export default defineComponent({
     const router = useRouter();
 
     const getCoinDetail = () => {
-      router.push({ path: 'details', query: { coin: cryptoCoin.value }  });
+      if (
+        store.getters.getCoinsName.filter((el) => el.name === cryptoCoin.value)
+          .length
+      ) {
+        router.push({ path: "details", query: { coin: cryptoCoin.value } });
+      }
     };
 
     const getCoinList = (crypto: string) => {
@@ -108,7 +111,6 @@ export default defineComponent({
   },
 });
 </script>
-
 
 <style>
 .app__info {

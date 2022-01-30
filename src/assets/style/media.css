@@ -1,0 +1,25 @@
+@media screen and (max-width: 400px) {
+    .home {
+        padding: 50px 0;
+    }
+    .app__info {
+        padding: 20px 15px;
+    }
+    .info__block-gradient {
+        width: 100%;
+    }
+    .info__input-active {
+        bottom: -35px;
+        opacity: 1;
+    }
+    .info__livesearch {
+        top: 110%;
+        z-index: 1;
+    }
+    .detail__page-description {
+        display: none;
+    }
+    .detail__info-block {
+        margin: 50px;
+    }
+}
